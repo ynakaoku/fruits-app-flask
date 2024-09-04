@@ -1,5 +1,6 @@
 Flask
 flask_pymongo
+flask-cors
 wget
 unzip
 iputils

@@ -41,10 +41,15 @@ def get_error():
 def get_fruits():
   owner_id = request.args.get("owner")
   tracer.set_tags({'owner_id': owner_id})
-  fruits = mongo.db.fruits.find( {'owner':owner_id}, projection={'_id':0, 'owner':1, 'id':1, 'name':1, 'production':1, 'quantity':1}, sort=[('id',1)])
-  entries = []
-  for row in fruits:
-    entries.append({"id": row['id'], "name": row['name'], "production": row['production'], "quantity": row['quantity']})
-  log.warn('Owner-ID:' + owner_id + ' got the fruits inventory!')
+
+  error = request.args.get("error")
+  if error is None:
+    fruits = mongo.db.fruits.find( {'owner':owner_id}, projection={'_id':0, 'owner':1, 'id':1, 'name':1, 'production':1, 'quantity':1}, sort=[('id',1)])
+    entries = []
+    for row in fruits:
+      entries.append({"id": row['id'], "name": row['name'], "production": row['production'], "quantity": row['quantity']})
+    log.warn('Owner-ID:' + owner_id + ' got the fruits inventory!')
+  else:
+    raise Exception
 
   return jsonify(entries)
