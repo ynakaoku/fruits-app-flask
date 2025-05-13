@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_pymongo import PyMongo
+from flask_cors import CORS
 # import sys
 import os
 
@@ -17,6 +18,8 @@ app.config['JSON_AS_ASCII'] = False     # use Japanese Char-set
 
 #mongo = PyMongo(app, config_prefix='MONGO')
 mongo = PyMongo(app)
+
+CORS(app)
 
 ### Datadog APM Log Injection settings
 FORMAT = ('%(asctime)s %(levelname)s [%(name)s] [%(filename)s:%(lineno)d] '
